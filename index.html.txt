@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para ti ??</title>
+
+<style>
+body{margin:0;background:black;font-family:Arial;overflow:hidden}
+
+/* LOGIN */
+#login,#carta{
+height:100vh;display:flex;flex-direction:column;
+justify-content:center;align-items:center;
+color:#ff69b4;text-align:center;transition:1s}
+
+input{padding:12px;border-radius:10px;border:none;font-size:18px}
+button{margin-top:15px;padding:12px 25px;border:none;border-radius:10px;
+background:#ff69b4;color:white;cursor:pointer}
+
+#pista{display:none;margin-top:10px;opacity:0.7}
+
+/* CARTA */
+#carta{display:none}
+.carta-box{
+background:rgba(255,255,255,0.05);
+padding:30px;border-radius:20px;
+max-width:700px;
+transform:scaleY(0);
+transform-origin:top;
+animation:abrir 1s forwards}
+
+@keyframes abrir{to{transform:scaleY(1)}}
+
+#textoCarta{white-space:pre-line;line-height:1.6}
+
+/* SORPRESA */
+#sorpresa{
+opacity:0;transform:scale(0.9);
+transition:1.5s;height:100vh;position:relative}
+
+.foto{
+position:absolute;top:50%;left:50%;
+transform:translate(-50%,-50%);
+width:260px;border-radius:20px;
+box-shadow:0 0 30px #ff69b4;z-index:2}
+
+.heart-text{
+position:absolute;width:100%;height:100%;
+color:#ff69b4;text-align:center;line-height:25px}
+
+.fadeText{opacity:0;animation:aparecer 2s forwards}
+@keyframes aparecer{to{opacity:1}}
+
+/* CORAZONES */
+.heart{
+position:absolute;color:#ff69b4;
+animation:flotar linear infinite}
+
+@keyframes flotar{
+0%{transform:translateY(100vh)}
+100%{transform:translateY(-10vh);opacity:0}}
+
+/* CONTADOR */
+#contador{
+position:absolute;bottom:40px;width:100%;
+text-align:center;color:#ff69b4;font-size:25px}
+</style>
+</head>
+
+<body>
+
+<div id="login">
+<h2>Ingresa la contraseña ??</h2>
+<input type="password" id="clave">
+<button onclick="verificar()">Entrar</button>
+<div id="pista">?? pista: fecha especial</div>
+</div>
+
+<div id="carta">
+<div class="carta-box">
+<p id="textoCarta"></p>
+<button onclick="mostrarSorpresa()">Continuar ??</button>
+</div>
+</div>
+
+<div id="sorpresa">
+<div class="heart-text" id="texto"></div>
+<img src="foto.jpg" class="foto">
+<div id="contador"></div>
+
+<iframe width="0" height="0"
+src="https://www.youtube.com/embed/ZYBWv4vCZKI?autoplay=1&loop=1&playlist=ZYBWv4vCZKI"
+allow="autoplay"></iframe>
+</div>
+
+<script>
+
+let intentos=0;
+
+let mensaje=`Para la chica que me hace latir el corazón todos los días, que me alegra con su presencia, mi luz, te amo, Génesis.
+Esta fecha especial ha sido gracias al esfuerzo de los dos. Me haces muy feliz con tus ocurrencias todos los días.
+Amo todo de ti: tus rulos, tus ojos, tus cachetes, tu forma de verme, tu color de piel, tu cuerpo, tu personalidad; amo cada una de ellas.
+Amo a mi lindo mundito que, aunque sea complejo, quiero conocer.
+Me siento tan feliz de por fin cumplir un año a tu lado. No sabes lo ansioso que estoy.
+Este regalo es para ti, de tu ing. de software. ??????`;
+
+function verificar(){
+let pass=document.getElementById("clave").value;
+
+if(pass==="25/04/2025"){
+document.getElementById("login").style.opacity="0";
+
+setTimeout(()=>{
+document.getElementById("login").style.display="none";
+document.getElementById("carta").style.display="flex";
+escribirTexto();
+},1000);
+
+}else{
+intentos++;
+alert("Contraseña incorrecta ??");
+if(intentos>=3){
+document.getElementById("pista").style.display="block";
+}
+}
+}
+
+function escribirTexto(){
+let i=0;
+function escribir(){
+if(i<mensaje.length){
+document.getElementById("textoCarta").innerHTML+=mensaje.charAt(i);
+i++;
+setTimeout(escribir,30);
+}}
+escribir();
+}
+
+function mostrarSorpresa(){
+document.getElementById("carta").style.opacity="0";
+
+setTimeout(()=>{
+document.getElementById("carta").style.display="none";
+let s=document.getElementById("sorpresa");
+s.style.opacity="1";
+s.style.transform="scale(1)";
+crearCorazon();
+corazones();
+contador();
+},1000);
+}
+
+function crearCorazon(){
+let cont=document.getElementById("texto");
+
+for(let y=1.5;y>-1.5;y-=0.15){
+let linea="";
+for(let x=-1.5;x<1.5;x+=0.05){
+let f=Math.pow(x*x+y*y-1,3)-x*x*y*y*y;
+linea+=(f<=0)?"<span class='fadeText'>I love you </span>":"&nbsp;&nbsp;";
+}
+cont.innerHTML+=linea+"<br>";
+}
+
+let spans=document.querySelectorAll(".fadeText");
+spans.forEach((el,i)=>el.style.animationDelay=(i*0.02)+"s");
+}
+
+function corazones(){
+setInterval(()=>{
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="??";
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=(10+Math.random()*20)+"px";
+h.style.animationDuration=(3+Math.random()*5)+"s";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),8000);
+},300);
+}
+
+function contador(){
+let fecha=new Date("2026-04-25");
+
+setInterval(()=>{
+let ahora=new Date();
+
+if(ahora>=fecha){
+document.getElementById("contador").innerHTML="?? Feliz aniversario ??";
+return;
+}
+
+let diff=fecha-ahora;
+
+let d=Math.floor(diff/(1000*60*60*24));
+let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+let m=Math.floor((diff%(1000*60*60))/(1000*60));
+let s=Math.floor((diff%(1000*60))/1000);
+
+document.getElementById("contador").innerHTML=
+d+"d "+h+"h "+m+"m "+s+"s";
+
+},1000);
+}
+
+</script>
+
+</body>
+</html>
