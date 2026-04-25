@@ -137,7 +137,7 @@ text-shadow:0 0 8px rgba(255,105,180,0.5);
 <!-- LOGIN --><div id="login" class="seccion">
 <div class="card">
 <h1>Para ti ??</h1>
-<p>Ingresa la contraseña</p>
+<p>Ingresa la contraseÃ±a</p>
 <input type="password" id="clave">
 <button onclick="verificar()">Entrar</button>
 </div>
@@ -160,10 +160,10 @@ escribir();
 }
 
 /* ESCRITURA NATURAL */
-let msg=`Para la persona que hace latir mi corazón ??
+let msg=`Para la persona que hace latir mi corazÃ³n ??
 
-Me haces feliz incluso en los días simples.
-Tu forma de ser, tu risa… todo.
+Me haces feliz incluso en los dÃ­as simples.
+Tu forma de ser, tu risaâ€¦ todo.
 
 Gracias por existir en mi vida.`;
 
@@ -184,7 +184,7 @@ fade("carta","final");
 contador();
 }
 
-/* TRANSICIÓN */
+/* TRANSICIÃ“N */
 function fade(a,b){
 document.getElementById(a).style.opacity=0;
 setTimeout(()=>{
@@ -199,11 +199,11 @@ let fecha=new Date("2026-04-25");
 setInterval(()=>{
 let diff=fecha-new Date();
 let d=Math.floor(diff/(1000*60*60*24));
-document.getElementById("contador").innerHTML=d+" días ??";
+document.getElementById("contador").innerHTML=d+" dÃ­as ??";
 },1000);
 }
 
-/* PARTÍCULAS FINAS */
+/* PARTÃCULAS FINAS */
 let c=document.getElementById("bg");
 let ctx=c.getContext("2d");
 c.width=innerWidth;
@@ -218,7 +218,7 @@ function draw(){
 ctx.clearRect(0,0,c.width,c.height);
 ctx.fillStyle="rgba(255,105,180,0.7)";
 p.forEach(e=>{
-ctx.fillText("•",e.x,e.y);
+ctx.fillText("â€¢",e.x,e.y);
 e.y-=0.3;
 if(e.y<0)e.y=c.height;
 });
