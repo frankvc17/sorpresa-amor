@@ -2,84 +2,157 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Para ti ??</title>
+<title>Para ti 💖</title>
 
 <style>
-body{margin:0;background:black;font-family:Arial;overflow:hidden}
+body{
+  margin:0;
+  background:black;
+  font-family:Arial;
+  overflow:hidden;
+}
 
-/* LOGIN */
+/* LOGIN Y CARTA */
 #login,#carta{
-height:100vh;display:flex;flex-direction:column;
-justify-content:center;align-items:center;
-color:#ff69b4;text-align:center;transition:1s}
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:#ff69b4;
+  text-align:center;
+  transition:1s;
+}
 
-input{padding:12px;border-radius:10px;border:none;font-size:18px}
-button{margin-top:15px;padding:12px 25px;border:none;border-radius:10px;
-background:#ff69b4;color:white;cursor:pointer}
+input{
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  font-size:18px;
+}
 
-#pista{display:none;margin-top:10px;opacity:0.7}
+button{
+  margin-top:15px;
+  padding:12px 25px;
+  border:none;
+  border-radius:10px;
+  background:#ff69b4;
+  color:white;
+  cursor:pointer;
+}
+
+#pista{
+  display:none;
+  margin-top:10px;
+  opacity:0.7;
+}
 
 /* CARTA */
 #carta{display:none}
+
 .carta-box{
-background:rgba(255,255,255,0.05);
-padding:30px;border-radius:20px;
-max-width:700px;
-transform:scaleY(0);
-transform-origin:top;
-animation:abrir 1s forwards}
+  background:rgba(255,255,255,0.05);
+  padding:30px;
+  border-radius:20px;
+  max-width:700px;
+  transform:scaleY(0);
+  transform-origin:top;
+  animation:abrir 1s forwards;
+}
 
-@keyframes abrir{to{transform:scaleY(1)}}
+@keyframes abrir{
+  to{transform:scaleY(1)}
+}
 
-#textoCarta{white-space:pre-line;line-height:1.6}
+#textoCarta{
+  white-space:pre-line;
+  line-height:1.6;
+}
 
 /* SORPRESA */
 #sorpresa{
-opacity:0;transform:scale(0.9);
-transition:1.5s;height:100vh;position:relative}
+  opacity:0;
+  transform:scale(0.9);
+  transition:1.5s;
+  height:100vh;
+  position:relative;
+}
 
+/* FOTO */
 .foto{
-position:absolute;top:50%;left:50%;
-transform:translate(-50%,-50%);
-width:260px;border-radius:20px;
-box-shadow:0 0 30px #ff69b4;z-index:2}
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.9);
+  width:260px;
+  border-radius:20px;
+  box-shadow:0 0 30px #ff69b4;
+  z-index:2;
+  animation:zoom 4s ease-in-out infinite alternate;
+}
 
+@keyframes zoom{
+  from{transform:translate(-50%,-50%) scale(0.9);}
+  to{transform:translate(-50%,-50%) scale(1);}
+}
+
+/* TEXTO CORAZÓN */
 .heart-text{
-position:absolute;width:100%;height:100%;
-color:#ff69b4;text-align:center;line-height:25px}
+  position:absolute;
+  width:100%;
+  height:100%;
+  color:#ff69b4;
+  text-align:center;
+  line-height:25px;
+  text-shadow:0 0 5px #ff69b4;
+}
 
-.fadeText{opacity:0;animation:aparecer 2s forwards}
-@keyframes aparecer{to{opacity:1}}
+.fadeText{
+  opacity:0;
+  animation:aparecer 2s forwards;
+}
+
+@keyframes aparecer{
+  to{opacity:1}
+}
 
 /* CORAZONES */
 .heart{
-position:absolute;color:#ff69b4;
-animation:flotar linear infinite}
+  position:absolute;
+  color:#ff69b4;
+  animation:flotar linear infinite;
+}
 
 @keyframes flotar{
-0%{transform:translateY(100vh)}
-100%{transform:translateY(-10vh);opacity:0}}
+  0%{transform:translateY(100vh)}
+  100%{transform:translateY(-10vh);opacity:0}
+}
 
 /* CONTADOR */
 #contador{
-position:absolute;bottom:40px;width:100%;
-text-align:center;color:#ff69b4;font-size:25px}
+  position:absolute;
+  bottom:40px;
+  width:100%;
+  text-align:center;
+  color:#ff69b4;
+  font-size:25px;
+}
 </style>
 </head>
 
 <body>
 
 <div id="login">
-<h2>Ingresa la contraseña ??</h2>
+<h2>Ingresa la contraseña 💌</h2>
 <input type="password" id="clave">
 <button onclick="verificar()">Entrar</button>
-<div id="pista">?? pista: fecha especial</div>
+<div id="pista">💡 pista: fecha especial</div>
 </div>
 
 <div id="carta">
 <div class="carta-box">
 <p id="textoCarta"></p>
-<button onclick="mostrarSorpresa()">Continuar ??</button>
+<button onclick="mostrarSorpresa()">Continuar 💖</button>
 </div>
 </div>
 
@@ -102,7 +175,7 @@ Esta fecha especial ha sido gracias al esfuerzo de los dos. Me haces muy feliz c
 Amo todo de ti: tus rulos, tus ojos, tus cachetes, tu forma de verme, tu color de piel, tu cuerpo, tu personalidad; amo cada una de ellas.
 Amo a mi lindo mundito que, aunque sea complejo, quiero conocer.
 Me siento tan feliz de por fin cumplir un año a tu lado. No sabes lo ansioso que estoy.
-Este regalo es para ti, de tu ing. de software. ??????`;
+Este regalo es para ti, de tu ing. de software. 😘🫶🏻`;
 
 function verificar(){
 let pass=document.getElementById("clave").value;
@@ -118,7 +191,7 @@ escribirTexto();
 
 }else{
 intentos++;
-alert("Contraseña incorrecta ??");
+alert("Contraseña incorrecta 💔");
 if(intentos>=3){
 document.getElementById("pista").style.display="block";
 }
@@ -152,6 +225,7 @@ contador();
 
 function crearCorazon(){
 let cont=document.getElementById("texto");
+cont.innerHTML="";
 
 for(let y=1.5;y>-1.5;y-=0.15){
 let linea="";
@@ -170,7 +244,7 @@ function corazones(){
 setInterval(()=>{
 let h=document.createElement("div");
 h.className="heart";
-h.innerHTML="??";
+h.innerHTML="❤️";
 h.style.left=Math.random()*100+"vw";
 h.style.fontSize=(10+Math.random()*20)+"px";
 h.style.animationDuration=(3+Math.random()*5)+"s";
@@ -186,7 +260,7 @@ setInterval(()=>{
 let ahora=new Date();
 
 if(ahora>=fecha){
-document.getElementById("contador").innerHTML="?? Feliz aniversario ??";
+document.getElementById("contador").innerHTML="💖 Feliz aniversario 💖";
 return;
 }
 
