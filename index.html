@@ -1,281 +1,274 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Para ti 💖</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins&display=swap" rel="stylesheet">
+
 <style>
 body{
-  margin:0;
-  background:black;
-  font-family:Arial;
-  overflow:hidden;
+margin:0;
+background:#000;
+font-family:'Poppins',sans-serif;
+overflow:hidden;
+color:#ff6fa5;
 }
 
-/* LOGIN Y CARTA */
-#login,#carta{
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  color:#ff69b4;
-  text-align:center;
-  transition:1s;
+/* CANVAS */
+canvas{
+position:fixed;
+top:0;left:0;
+z-index:0;
 }
 
+/* SECCIONES */
+.seccion{
+position:absolute;
+width:100%;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+z-index:2;
+transition:1s;
+}
+
+/* TITULO */
+h1{
+font-family:'Great Vibes';
+font-size:70px;
+text-shadow:0 0 30px #ff4d88;
+}
+
+/* INPUT */
 input{
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  font-size:18px;
+padding:12px;
+border-radius:20px;
+border:1px solid #ff6fa5;
+background:transparent;
+color:white;
+box-shadow:0 0 15px #ff6fa5;
 }
 
+/* BOTON */
 button{
-  margin-top:15px;
-  padding:12px 25px;
-  border:none;
-  border-radius:10px;
-  background:#ff69b4;
-  color:white;
-  cursor:pointer;
+margin-top:15px;
+padding:12px 35px;
+border:none;
+border-radius:25px;
+background:linear-gradient(45deg,#ff4d88,#ff6fa5);
+color:white;
+cursor:pointer;
+box-shadow:0 0 25px #ff4d88;
+transition:0.3s;
 }
-
-#pista{
-  display:none;
-  margin-top:10px;
-  opacity:0.7;
-}
+button:hover{transform:scale(1.1)}
 
 /* CARTA */
 #carta{display:none}
-
 .carta-box{
-  background:rgba(255,255,255,0.05);
-  padding:30px;
-  border-radius:20px;
-  max-width:700px;
-  transform:scaleY(0);
-  transform-origin:top;
-  animation:abrir 1s forwards;
+background:rgba(255,255,255,0.05);
+padding:30px;
+border-radius:20px;
+border:1px solid #ff4d88;
+box-shadow:0 0 40px #ff4d88;
+max-width:700px;
 }
 
-@keyframes abrir{
-  to{transform:scaleY(1)}
+/* CURSOR */
+.cursor{
+display:inline-block;
+width:2px;
+background:#ff6fa5;
+animation:blink 1s infinite;
 }
+@keyframes blink{50%{opacity:0}}
 
-#textoCarta{
-  white-space:pre-line;
-  line-height:1.6;
+/* LOADING */
+#loading{display:none}
+.barra{
+width:250px;height:10px;
+background:#222;border-radius:20px;
+overflow:hidden;
 }
-
-/* SORPRESA */
-#sorpresa{
-  opacity:0;
-  transform:scale(0.9);
-  transition:1.5s;
-  height:100vh;
-  position:relative;
+.progreso{
+height:100%;
+background:#ff6fa5;
+width:0%;
 }
 
 /* FOTO */
 .foto{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) scale(0.9);
-  width:260px;
-  border-radius:20px;
-  box-shadow:0 0 30px #ff69b4;
-  z-index:2;
-  animation:zoom 4s ease-in-out infinite alternate;
+position:absolute;
+top:50%;left:50%;
+transform:translate(-50%,-50%) scale(0.8);
+width:260px;
+border-radius:20px;
+box-shadow:0 0 50px #ff4d88;
+animation:zoom 3s forwards;
+z-index:2;
 }
-
 @keyframes zoom{
-  from{transform:translate(-50%,-50%) scale(0.9);}
-  to{transform:translate(-50%,-50%) scale(1);}
-}
-
-/* TEXTO CORAZÓN */
-.heart-text{
-  position:absolute;
-  width:100%;
-  height:100%;
-  color:#ff69b4;
-  text-align:center;
-  line-height:25px;
-  text-shadow:0 0 5px #ff69b4;
-}
-
-.fadeText{
-  opacity:0;
-  animation:aparecer 2s forwards;
-}
-
-@keyframes aparecer{
-  to{opacity:1}
-}
-
-/* CORAZONES */
-.heart{
-  position:absolute;
-  color:#ff69b4;
-  animation:flotar linear infinite;
-}
-
-@keyframes flotar{
-  0%{transform:translateY(100vh)}
-  100%{transform:translateY(-10vh);opacity:0}
+to{transform:translate(-50%,-50%) scale(1)}
 }
 
 /* CONTADOR */
 #contador{
-  position:absolute;
-  bottom:40px;
-  width:100%;
-  text-align:center;
-  color:#ff69b4;
-  font-size:25px;
+position:absolute;
+bottom:30px;
+width:100%;
+text-align:center;
+font-size:22px;
+text-shadow:0 0 10px #ff4d88;
+}
+
+/* EXPLOSION */
+.explosion{
+position:absolute;
+font-size:20px;
+animation:boom 2s forwards;
+}
+@keyframes boom{
+to{
+transform:translateY(-200px) scale(2);
+opacity:0;
+}
 }
 </style>
 </head>
 
 <body>
 
-<div id="login">
-<h2>Ingresa la contraseña 💌</h2>
+<canvas id="bg"></canvas>
+
+<div id="login" class="seccion">
+<h1>Para ti 💖</h1>
 <input type="password" id="clave">
 <button onclick="verificar()">Entrar</button>
-<div id="pista">💡 pista: fecha especial</div>
 </div>
 
-<div id="carta">
+<div id="carta" class="seccion">
 <div class="carta-box">
-<p id="textoCarta"></p>
-<button onclick="mostrarSorpresa()">Continuar 💖</button>
+<p id="textoCarta"></p><span class="cursor"></span>
+<button onclick="cargar()">Continuar 💖</button>
 </div>
 </div>
 
-<div id="sorpresa">
-<div class="heart-text" id="texto"></div>
+<div id="loading" class="seccion">
+<h2>Preparando algo especial... 💕</h2>
+<div class="barra"><div class="progreso" id="prog"></div></div>
+</div>
+
+<div id="final" style="display:none">
 <img src="foto.jpg" class="foto">
 <div id="contador"></div>
-
-<iframe width="0" height="0"
-src="https://www.youtube.com/embed/ZYBWv4vCZKI?autoplay=1&loop=1&playlist=ZYBWv4vCZKI"
-allow="autoplay"></iframe>
 </div>
 
 <script>
 
-let intentos=0;
-
-let mensaje=`Para la chica que me hace latir el corazón todos los días, que me alegra con su presencia, mi luz, te amo, Génesis.
-Esta fecha especial ha sido gracias al esfuerzo de los dos. Me haces muy feliz con tus ocurrencias todos los días.
-Amo todo de ti: tus rulos, tus ojos, tus cachetes, tu forma de verme, tu color de piel, tu cuerpo, tu personalidad; amo cada una de ellas.
-Amo a mi lindo mundito que, aunque sea complejo, quiero conocer.
-Me siento tan feliz de por fin cumplir un año a tu lado. No sabes lo ansioso que estoy.
-Este regalo es para ti, de tu ing. de software. 😘🫶🏻`;
-
+/* LOGIN */
 function verificar(){
-let pass=document.getElementById("clave").value;
-
-if(pass==="25/04/2025"){
-document.getElementById("login").style.opacity="0";
-
-setTimeout(()=>{
-document.getElementById("login").style.display="none";
-document.getElementById("carta").style.display="flex";
-escribirTexto();
-},1000);
-
-}else{
-intentos++;
-alert("Contraseña incorrecta 💔");
-if(intentos>=3){
-document.getElementById("pista").style.display="block";
-}
-}
-}
-
-function escribirTexto(){
-let i=0;
-function escribir(){
-if(i<mensaje.length){
-document.getElementById("textoCarta").innerHTML+=mensaje.charAt(i);
-i++;
-setTimeout(escribir,30);
-}}
+if(document.getElementById("clave").value==="25/04/2025"){
+fade("login","carta");
 escribir();
 }
+}
 
-function mostrarSorpresa(){
-document.getElementById("carta").style.opacity="0";
+/* ESCRITURA */
+let msg="Eres lo mejor que me ha pasado 💖";
+function escribir(){
+let i=0;
+function t(){
+if(i<msg.length){
+document.getElementById("textoCarta").innerHTML+=msg[i];
+i++;
+setTimeout(t,40);
+}}
+t();
+}
 
-setTimeout(()=>{
-document.getElementById("carta").style.display="none";
-let s=document.getElementById("sorpresa");
-s.style.opacity="1";
-s.style.transform="scale(1)";
-crearCorazon();
-corazones();
+/* CARGA */
+function cargar(){
+fade("carta","loading");
+let p=0;
+let barra=document.getElementById("prog");
+
+let interval=setInterval(()=>{
+p+=2;
+barra.style.width=p+"%";
+if(p>=100){
+clearInterval(interval);
+fade("loading","final");
 contador();
-},1000);
+explosion();
+}
+},50);
 }
 
-function crearCorazon(){
-let cont=document.getElementById("texto");
-cont.innerHTML="";
-
-for(let y=1.5;y>-1.5;y-=0.15){
-let linea="";
-for(let x=-1.5;x<1.5;x+=0.05){
-let f=Math.pow(x*x+y*y-1,3)-x*x*y*y*y;
-linea+=(f<=0)?"<span class='fadeText'>I love you </span>":"&nbsp;&nbsp;";
-}
-cont.innerHTML+=linea+"<br>";
+/* FADE */
+function fade(a,b){
+document.getElementById(a).style.opacity=0;
+setTimeout(()=>{
+document.getElementById(a).style.display="none";
+document.getElementById(b).style.display="flex";
+},800);
 }
 
-let spans=document.querySelectorAll(".fadeText");
-spans.forEach((el,i)=>el.style.animationDelay=(i*0.02)+"s");
-}
-
-function corazones(){
-setInterval(()=>{
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.fontSize=(10+Math.random()*20)+"px";
-h.style.animationDuration=(3+Math.random()*5)+"s";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),8000);
-},300);
-}
-
+/* CONTADOR */
 function contador(){
-let fecha=new Date("2026-04-25");
-
+let f=new Date("2026-04-25");
 setInterval(()=>{
-let ahora=new Date();
-
-if(ahora>=fecha){
-document.getElementById("contador").innerHTML="💖 Feliz aniversario 💖";
-return;
-}
-
-let diff=fecha-ahora;
-
-let d=Math.floor(diff/(1000*60*60*24));
-let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-let m=Math.floor((diff%(1000*60*60))/(1000*60));
-let s=Math.floor((diff%(1000*60))/1000);
-
-document.getElementById("contador").innerHTML=
-d+"d "+h+"h "+m+"m "+s+"s";
-
+let d=f-new Date();
+let dias=Math.floor(d/86400000);
+document.getElementById("contador").innerHTML=dias+" días 💖";
 },1000);
 }
+
+/* EXPLOSION */
+function explosion(){
+for(let i=0;i<30;i++){
+let e=document.createElement("div");
+e.className="explosion";
+e.innerHTML="💖";
+e.style.left=Math.random()*100+"vw";
+e.style.top="80vh";
+document.body.appendChild(e);
+setTimeout(()=>e.remove(),2000);
+}
+}
+
+/* PARTICULAS CANVAS */
+let c=document.getElementById("bg");
+let ctx=c.getContext("2d");
+c.width=innerWidth;
+c.height=innerHeight;
+
+let hearts=[];
+for(let i=0;i<50;i++){
+hearts.push({
+x:Math.random()*c.width,
+y:Math.random()*c.height,
+s:Math.random()*3+1,
+v:Math.random()*1+0.5
+});
+}
+
+function draw(){
+ctx.clearRect(0,0,c.width,c.height);
+ctx.fillStyle="#ff4d88";
+
+hearts.forEach(h=>{
+ctx.fillText("💖",h.x,h.y);
+h.y-=h.v;
+if(h.y<0)h.y=c.height;
+});
+
+requestAnimationFrame(draw);
+}
+draw();
 
 </script>
 
